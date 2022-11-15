@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 import 'package:path/path.dart';
+import 'package:photoshare/services/notification_services.dart';
 import 'package:photoshare/screens/foto_screen.dart';
+import 'package:provider/provider.dart';
 
 class CameraScreen extends StatefulWidget {
   @override
@@ -10,7 +12,6 @@ class CameraScreen extends StatefulWidget {
 
 class _CameraScreenState extends State<CameraScreen> {
   late CameraController controller;
-
   late List<CameraDescription> cameras;
   late CameraDescription camera;
   Widget cameraPreview = Center(
@@ -36,6 +37,7 @@ class _CameraScreenState extends State<CameraScreen> {
         });
       });
     });
+  
     super.initState();
   }
 
@@ -44,6 +46,11 @@ class _CameraScreenState extends State<CameraScreen> {
     controller.dispose();
     super.dispose();
   }
+
+  //checkNotification() async {
+  //await Provider.of<NotificationService>(context, listen: false)
+  //    .checkForNotifications();
+  //}
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +62,7 @@ class _CameraScreenState extends State<CameraScreen> {
         child: Column(
           children: [
             cameraPreview,
-          //  TextButton(child: Text("Salvar"), onPressed: (){})
+            //  TextButton(child: Text("Salvar"), onPressed: (){})
           ],
         ),
       ),

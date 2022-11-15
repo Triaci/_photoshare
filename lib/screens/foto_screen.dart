@@ -1,13 +1,17 @@
 import 'dart:io';
 import 'package:dio/dio.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:path_provider/path_provider.dart';
 import 'dart:math' as math;
 import 'package:photoshare/main.dart';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart';
 import 'package:gallery_saver/gallery_saver.dart';
+import 'package:photoshare/services/notification_services.dart';
+import 'package:provider/provider.dart';
+
+import '../services/firebase_messaging_service.dart';
 
 @immutable
 class FotoScreen extends StatelessWidget {
@@ -37,6 +41,19 @@ class FotoScreen extends StatelessWidget {
     );
   }
 
+  void _salvaGaleria(BuildContext context) async {
+    final notification = NotificationService();
+    final firebase = FireBaseMessagingService();
+
+    //await GallerySaver.saveImage(imagePath);
+    firebase.setNotifications();
+    /*notification.showNotification(LocalNotification(
+        id: 1,
+        title: "A imagem foi salva na Galeria",
+        body: "Verifique a Galeria",
+        payload: "asd"));*/
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,8 +69,7 @@ class FotoScreen extends StatelessWidget {
           ActionButton(
               icon: const Icon(Icons.insert_photo),
               onPressed: () async {
-                await GallerySaver.saveImage(imagePath);
-                _showAction(context, 0);
+                _salvaGaleria(context);
               }),
           ActionButton(
               icon: const Icon(Icons.account_box),
@@ -70,6 +86,7 @@ class FotoScreen extends StatelessWidget {
   }
 }
 
+/*Código do Floating Action Button*/
 @immutable
 class ExpandableFab extends StatefulWidget {
   const ExpandableFab({
