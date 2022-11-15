@@ -3,50 +3,69 @@ import 'package:camera/camera.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_sound/public/flutter_sound_recorder.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'dart:math' as math;
 import 'package:photoshare/main.dart';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart';
 import 'package:gallery_saver/gallery_saver.dart';
+import 'package:photoshare/screens/home_screen.dart';
 import 'package:photoshare/services/notification_services.dart';
 import 'package:share_plus/share_plus.dart';
 
 import '../services/firebase_messaging_service.dart';
 
 @immutable
-class FotoScreen extends StatelessWidget {
-  static const _actionTitles = [
-    'A Foto Foi Salva na Galeria!',
-    '',
-    'Upload Video'
-  ];
-  final String imagePath;
+class AudioScreen extends State<HomePage> {
+  final recorder = FlutterSoundRecorder();
+  bool isRecorderReady = false;
 
-  const FotoScreen(this.imagePath);
+  @override
+  void initState() {
+    super.initState();
+    initRecorder();
+  }
 
-  void _showAction(BuildContext context, int index) {
-    showDialog<void>(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          content: Text(_actionTitles[index]),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.of(context).pop(),
-              child: const Text('Fechar'),
-            ),
-          ],
-        );
-      },
+  @override
+  void dispose() {
+    recorder.closeRecorder();
+    super.dispose();
+  }
+
+  Future initRecorder() async {
+    final status = await Permission.microphone.request();
+
+    if (status != PermissionStatus.granted) {
+      throw 'Microfone sem permissão';
+    }
+    await recorder.openRecorder();
+
+    isRecorderReady = true;
+    recorder.setSubscriptionDuration(
+      const Duration(milliseconds: 500),
     );
+  }
+
+  Future record() async {
+    if (!isRecorderReady) return;
+    await recorder.startRecorder(toFile: 'audio');
+  }
+
+  Future stop() async {
+    if (!isRecorderReady) return;
+    final path = await recorder.stopRecorder();
+    final audioFile = File(path!);
+
+    await recorder.stopRecorder();
   }
 
   void _salvaGaleria(BuildContext context) async {
     final notification = NotificationService();
     //final firebase = FireBaseMessagingService();
 
-    await GallerySaver.saveImage(imagePath);
+    //await GallerySaver.saveImage();
     /*notification.showNotification(LocalNotification(
         id: 1,
         title: "A imagem foi salva na Galeria",
@@ -54,20 +73,53 @@ class FotoScreen extends StatelessWidget {
         payload: "asd"));*/
   }
 
-  void _compartilha(BuildContext context, File file) {
+  /* void _compartilha(BuildContext context, File file) {
     Share.shareXFiles([XFile(file.path)],
         text: "Olha essa Foto que eu tirei com meu app Mano!!!!",
         subject: "PhotoShare");
-  }
+  }*/
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Tratar Imagem'),
+        title: const Text('Gravar um Áudio'),
       ),
-      body: Container(
-        child: Image.file(File(imagePath)),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            StreamBuilder<RecordingDisposition>(
+                stream: recorder.onProgress,
+                builder: (context, snapshot) {
+                  final duration = snapshot.hasData
+                      ? snapshot.data!.duration
+                      : Duration.zero;
+                  String twoDigits(int n) => n.toString().padLeft(1);
+                  final twoDigitsMinutes =
+                      twoDigits(duration.inMinutes.remainder(60));
+                  final twoDigitsSeconds =
+                      twoDigits(duration.inSeconds.remainder(60));
+                  return Text('$twoDigitsMinutes: $twoDigitsSeconds',
+                      style: const TextStyle(
+                          fontSize: 80, fontWeight: FontWeight.bold));
+                }),
+            const SizedBox(
+              height: 32,
+            ),
+            ElevatedButton(
+              child: Icon(recorder.isRecording ? Icons.stop : Icons.mic),
+              onPressed: () async {
+                if (recorder.isRecording) {
+                  await stop();
+                } else {
+                  await record();
+                }
+                setState(() {});
+              },
+            ),
+          ],
+        ),
       ),
       floatingActionButton: ExpandableFab(
         distance: 112.0,
@@ -80,12 +132,9 @@ class FotoScreen extends StatelessWidget {
           ActionButton(
               icon: const Icon(Icons.share),
               onPressed: () async {
-                _compartilha(context, File(imagePath));
+                //_compartilha(context, File(imagePath));
               }),
-          ActionButton(
-            onPressed: () => _showAction(context, 2),
-            icon: const Icon(Icons.mail)
-          ),
+          ActionButton(onPressed: () {}, icon: const Icon(Icons.mail)),
         ],
       ),
     );
@@ -280,7 +329,7 @@ class ActionButton extends StatelessWidget {
     required this.icon,
   });
 
-  final VoidCallback? onPressed;
+  final onPressed;
   final Widget icon;
 
   @override

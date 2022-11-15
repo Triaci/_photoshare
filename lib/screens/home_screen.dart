@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:photoshare/screens/audio_screen.dart';
 import 'package:photoshare/screens/camera_screen.dart';
 
 import '../services/firebase_messaging_service.dart';
@@ -24,12 +25,22 @@ class _HomePageState extends State<HomePage> {
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [ElevatedButton(onPressed: () {
-            MaterialPageRoute route =
-                MaterialPageRoute(builder: (context) => CameraScreen());
-            Navigator.push(context, route);
-            
-          }, child: Text("Tirar Foto"))],
+          children: [
+            ElevatedButton(
+                onPressed: () {
+                  MaterialPageRoute route =
+                      MaterialPageRoute(builder: (context) => CameraScreen());
+                  Navigator.push(context, route);
+                },
+                child: Text("Tirar Foto")),
+            ElevatedButton(
+                onPressed: () {
+                  MaterialPageRoute route =
+                      MaterialPageRoute(builder: (context) => AudioScreen());
+                  Navigator.push(context, route);
+                },
+                child: Text("Gravar um Áudio."))
+          ],
         ),
       ),
     );

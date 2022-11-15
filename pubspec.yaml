@@ -45,6 +45,10 @@ dependencies:
   timezone: ^0.8.0
   flutter_native_timezone: ^2.0.0
   flutter_local_notifications: ^9.4.0
+  shared_preferences: ^2.0.15
+  share_plus: ^6.3.0
+  flutter_sound: ^9.1.9 
+  permission_handler: ^9.2.0
 
 dev_dependencies:
   flutter_test:

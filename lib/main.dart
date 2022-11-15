@@ -1,13 +1,12 @@
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:photoshare/photoshare.dart';
 import 'package:photoshare/screens/home_screen.dart';
 
 
 void main() async {
   await init();
-  runApp(const MyApp());
+  runApp(const PhotoShare());
 }
 
 Future init() async {
@@ -15,8 +14,8 @@ Future init() async {
   await Firebase.initializeApp();
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+class PhotoShare extends StatelessWidget {
+  const PhotoShare({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

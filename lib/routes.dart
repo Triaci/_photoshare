@@ -1,12 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:photoshare/main.dart';
+import 'package:photoshare/screens/home_screen.dart';
 
-import '../photoshare.dart';
 
 class Routes {
   static Map<String, Widget Function(BuildContext)> list =
       <String, WidgetBuilder>{
-    '\home': (_) => const PhotoShare(),
+    '\home': (_) => const HomePage(),
   };
   static String initial = '/home';
 
