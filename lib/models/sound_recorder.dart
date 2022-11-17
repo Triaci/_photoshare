@@ -1,10 +1,5 @@
 import 'dart:async';
-import 'dart:ffi';
-import 'dart:html';
 
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_sound_lite/flutter_sound.dart';
 import 'package:flutter_sound_lite/public/flutter_sound_recorder.dart';
 import 'package:path_provider/path_provider.dart';
@@ -12,7 +7,6 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:share_plus/share_plus.dart';
 
 final pathToSaveAudio = getTemporaryDirectory();
-
 
 class SoundRecorder {
   FlutterSoundRecorder? _audioRecorder;
@@ -40,14 +34,14 @@ class SoundRecorder {
   Future _record() async {
     if (!_isRecorderInitialized) return;
     await _audioRecorder!
-        .startRecorder(toFile: "$pathToSaveAudio/media.mp3", codec: Codec.mp3);
+        .startRecorder(toFile: pathToSaveAudio.toString(), codec: Codec.mp3);
   }
 
   Future _stop() async {
     if (!_isRecorderInitialized) return;
     await _audioRecorder!.stopRecorder();
 
-    Share.shareXFiles([XFile("$pathToSaveAudio/media.mp3")],
+    Share.shareXFiles([XFile(pathToSaveAudio.toString())],
         text: "Olha esse Audio que eu gravei com meu app Mano!!!!",
         subject: "PhotoShare");
   }
