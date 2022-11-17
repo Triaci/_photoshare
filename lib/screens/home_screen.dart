@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:photoshare/screens/audio_screen.dart';
 import 'package:photoshare/screens/camera_screen.dart';
@@ -36,7 +38,7 @@ class _HomePageState extends State<HomePage> {
             ElevatedButton(
                 onPressed: () {
                   MaterialPageRoute route =
-                      MaterialPageRoute(builder: (context) => AudioScreen());
+                      MaterialPageRoute(builder: (context) => AudioComponent(File("sdas")));
                   Navigator.push(context, route);
                 },
                 child: Text("Gravar um Áudio."))
