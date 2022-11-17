@@ -35,7 +35,7 @@ class _AudioComponentState extends State<AudioComponent> {
   }
 
   void _initState() async {
-    await audioComponentPlayer.setSourceUrl(file.path);
+    // await audioComponentPlayer.setSourceUrl(file.path);
   }
 
   @override

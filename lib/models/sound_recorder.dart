@@ -1,12 +1,12 @@
 import 'dart:async';
+import 'dart:io';
 
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter_sound_lite/flutter_sound.dart';
 import 'package:flutter_sound_lite/public/flutter_sound_recorder.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:share_plus/share_plus.dart';
-
-final pathToSaveAudio = getTemporaryDirectory();
 
 class SoundRecorder {
   FlutterSoundRecorder? _audioRecorder;
@@ -32,16 +32,39 @@ class SoundRecorder {
   }
 
   Future _record() async {
+    var tempDir = await getApplicationDocumentsDirectory();
+    String path = '${tempDir.path}/flutter_sound.aac';
     if (!_isRecorderInitialized) return;
-    await _audioRecorder!
-        .startRecorder(toFile: pathToSaveAudio.toString(), codec: Codec.mp3);
+    await _audioRecorder!.startRecorder(toFile: path, codec: Codec.aacADTS);
+
+    print(
+        "..............................................................................");
+    print(path);
+    print(
+        "..............................................................................");
   }
 
   Future _stop() async {
     if (!_isRecorderInitialized) return;
     await _audioRecorder!.stopRecorder();
 
-    Share.shareXFiles([XFile(pathToSaveAudio.toString())],
+    var tempDir = await getApplicationDocumentsDirectory();
+    String path = '${tempDir.path}/flutter_sound.aac';
+
+    print(
+        "..............................................................................");
+    // print(f.path);
+    print(
+        "..............................................................................");
+
+    // final audioPlayer = Assets
+
+    // FlutterSoundPlayer myPlayer = FlutterSoundPlayer();
+    // FlutterSoundPlayer? myPlayer = await FlutterSoundPlayer().openAudioSession();
+
+    // myPlayer!.startPlayer(fromURI: path, codec: Codec.aacADTS);
+
+    Share.shareXFiles([XFile(path)],
         text: "Olha esse Audio que eu gravei com meu app Mano!!!!",
         subject: "PhotoShare");
   }
