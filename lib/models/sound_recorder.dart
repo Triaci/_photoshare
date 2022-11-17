@@ -11,6 +11,7 @@ import 'package:share_plus/share_plus.dart';
 class SoundRecorder {
   FlutterSoundRecorder? _audioRecorder;
   bool _isRecorderInitialized = false;
+  String _recordPath = "";
 
   bool get isRecording => _audioRecorder!.isRecording;
 
@@ -22,6 +23,8 @@ class SoundRecorder {
     }
     await _audioRecorder!.openAudioSession();
     _isRecorderInitialized = true;
+    var tempDir = await getApplicationDocumentsDirectory();
+    _recordPath = '${tempDir.path}/record.aac';
   }
 
   void dispose() {
@@ -32,39 +35,20 @@ class SoundRecorder {
   }
 
   Future _record() async {
-    var tempDir = await getApplicationDocumentsDirectory();
-    String path = '${tempDir.path}/flutter_sound.aac';
     if (!_isRecorderInitialized) return;
-    await _audioRecorder!.startRecorder(toFile: path, codec: Codec.aacADTS);
-
-    print(
-        "..............................................................................");
-    print(path);
-    print(
-        "..............................................................................");
+    await _audioRecorder!
+        .startRecorder(toFile: _recordPath, codec: Codec.aacADTS);
   }
 
   Future _stop() async {
     if (!_isRecorderInitialized) return;
     await _audioRecorder!.stopRecorder();
 
-    var tempDir = await getApplicationDocumentsDirectory();
-    String path = '${tempDir.path}/flutter_sound.aac';
+    FlutterSoundPlayer? myPlayer =
+        await FlutterSoundPlayer().openAudioSession();
+    myPlayer!.startPlayer(fromURI: _recordPath, codec: Codec.aacADTS);
 
-    print(
-        "..............................................................................");
-    // print(f.path);
-    print(
-        "..............................................................................");
-
-    // final audioPlayer = Assets
-
-    // FlutterSoundPlayer myPlayer = FlutterSoundPlayer();
-    // FlutterSoundPlayer? myPlayer = await FlutterSoundPlayer().openAudioSession();
-
-    // myPlayer!.startPlayer(fromURI: path, codec: Codec.aacADTS);
-
-    Share.shareXFiles([XFile(path)],
+    Share.shareXFiles([XFile(_recordPath)],
         text: "Olha esse Audio que eu gravei com meu app Mano!!!!",
         subject: "PhotoShare");
   }
