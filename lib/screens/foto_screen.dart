@@ -1,18 +1,11 @@
 import 'dart:io';
-import 'package:camera/camera.dart';
-import 'package:dio/dio.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:path_provider/path_provider.dart';
 import 'dart:math' as math;
-import 'package:photoshare/main.dart';
-import 'package:flutter/material.dart';
-import 'package:path/path.dart';
 import 'package:gallery_saver/gallery_saver.dart';
 import 'package:photoshare/services/notification_services.dart';
 import 'package:share_plus/share_plus.dart';
 
-import '../services/firebase_messaging_service.dart';
+
 
 @immutable
 class FotoScreen extends StatelessWidget {
