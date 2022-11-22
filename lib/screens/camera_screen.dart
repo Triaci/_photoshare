@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 import 'package:path/path.dart';
-import 'package:photoshare/services/notification_services.dart';
+import 'package:photoshare/services/notification_service.dart';
 import 'package:photoshare/screens/foto_screen.dart';
 import 'package:provider/provider.dart';
 

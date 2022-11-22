@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
 import 'package:gallery_saver/gallery_saver.dart';
-import 'package:photoshare/services/notification_services.dart';
+import 'package:photoshare/services/notification_service.dart';
 import 'package:share_plus/share_plus.dart';
 
 
