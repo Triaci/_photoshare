@@ -75,8 +75,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       print('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%');
       print(e.message);
       print('&&&&&&&&&&&&&&&&&&&&&&&&&&&&');
-
-      Utils().showSnackBar(e.message);
+      Utils.showSnackBar(e.message);
     }
   }
 }

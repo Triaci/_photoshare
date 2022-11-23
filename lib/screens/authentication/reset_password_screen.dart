@@ -6,11 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:photoshare/helpers/utils.dart';
 import 'package:photoshare/screens/authentication/auth_screen.dart';
 
-
 class ResetScreen extends StatefulWidget {
- 
-  const ResetScreen({Key? key})
-      : super(key: key);
+  const ResetScreen({Key? key}) : super(key: key);
 
   @override
   State<ResetScreen> createState() => _ResetScreenState();
@@ -45,20 +42,19 @@ class _ResetScreenState extends State<ResetScreen> {
   }
 
   void resetPassword() async {
-    
-    
     try {
       await FirebaseAuth.instance.sendPasswordResetEmail(
-          email: emailController.text.trim(),);
-           MaterialPageRoute route =
-                MaterialPageRoute(builder: (context) => AuthScreen());
-            Navigator.push(context, route); 
+        email: emailController.text.trim(),
+      );
+      MaterialPageRoute route =
+          MaterialPageRoute(builder: (context) => AuthScreen());
+      Navigator.push(context, route);
     } on FirebaseAuthException catch (e) {
       print('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%');
       print(e.message);
       print('&&&&&&&&&&&&&&&&&&&&&&&&&&&&');
 
-      Utils().showSnackBar(e.message);
+      Utils.showSnackBar(e.message);
     }
   }
 }

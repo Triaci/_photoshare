@@ -3,11 +3,12 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:photoshare/helpers/utils.dart';
 import 'package:photoshare/screens/authentication/auth_screen.dart';
+import 'package:photoshare/screens/authentication/reset_password_screen.dart';
 import 'package:photoshare/screens/home_screen.dart';
 
 void main() async {
   await init();
-  runApp(const PhotoShare());
+  runApp(PhotoShare());
 }
 
 Future init() async {
@@ -16,11 +17,15 @@ Future init() async {
 }
 
 class PhotoShare extends StatelessWidget {
-  const PhotoShare({Key? key}) : super(key: key);
+  late GlobalKey<ScaffoldMessengerState> messengerKey;
+
+  PhotoShare() {
+    messengerKey = Utils.getMessengerKey();
+  }
 
   @override
   Widget build(BuildContext context) => MaterialApp(
-        scaffoldMessengerKey: Utils().messengerKey,
+        scaffoldMessengerKey: messengerKey,
         home: Scaffold(
           body: StreamBuilder<User?>(
               stream: FirebaseAuth.instance.authStateChanges(),

@@ -25,11 +25,11 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final user = FirebaseAuth.instance.currentUser!;
+    final user = FirebaseAuth.instance.currentUser;
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(user.email.toString()),
+        title: user != null ? Text(user.email.toString()) : Text("Usuário não logado")
       ),
       body: Center(
         child: Column(
