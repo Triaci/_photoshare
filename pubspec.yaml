@@ -54,6 +54,10 @@ dependencies:
   audioplayers: ^1.1.1
   email_validator: ^2.1.17
   receive_sharing_intent: ^1.4.5
+  uri_to_file: ^0.2.0
+  receive_intent: ^0.2.3
+  
+
 
 dev_dependencies:
   flutter_test:

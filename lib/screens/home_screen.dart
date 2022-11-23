@@ -4,7 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:photoshare/screens/audio_screen.dart';
 import 'package:photoshare/screens/camera_screen.dart';
-import 'package:photoshare/screens/receive_intent_screen.dart';
+import 'package:photoshare/screens/memories_screen.dart';
 
 import '../services/firebase_messaging_service.dart';
 
@@ -51,17 +51,21 @@ class _HomePageState extends State<HomePage> {
                 child: Text("Gravar um Áudio.")),
             ElevatedButton(
                 onPressed: () {
-                  MaterialPageRoute route =
-                MaterialPageRoute(builder: (context) => ReceiveIntent());
-            Navigator.push(context, route);
-                  ;
+                  
                 },
                 child: Text("Receber um Intent")),
             ElevatedButton(
                 onPressed: () {
                   FirebaseAuth.instance.signOut();
                 },
-                child: Text("Sign Out"))    
+                child: Text("Sign Out")),
+            ElevatedButton(
+                onPressed: () {
+                  MaterialPageRoute route = MaterialPageRoute(
+                      builder: (context) => MemoriesScreen());
+                  Navigator.push(context, route);
+                },
+                child: Text("Memorias"))        
           ],
         ),
       ),
