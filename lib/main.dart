@@ -5,7 +5,6 @@ import 'package:photoshare/helpers/utils.dart';
 import 'package:photoshare/screens/authentication/auth_screen.dart';
 import 'package:photoshare/screens/home_screen.dart';
 
-
 void main() async {
   await init();
   runApp(const PhotoShare());
@@ -33,7 +32,8 @@ class PhotoShare extends StatelessWidget {
                 } else if (snapshot.hasData) {
                   return HomePage();
                 } else {
-                  return AuthScreen();
+                  return HomePage();
+                  //AuthScreen();
                 }
               }),
         ),
