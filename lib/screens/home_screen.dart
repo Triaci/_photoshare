@@ -3,7 +3,9 @@ import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:photoshare/screens/audio_screen.dart';
+import 'package:photoshare/screens/authentication/auth_screen.dart';
 import 'package:photoshare/screens/camera_screen.dart';
+import 'package:photoshare/screens/intent_screen.dart';
 import 'package:photoshare/screens/memories_screen.dart';
 
 import '../services/firebase_messaging_service.dart';
@@ -57,6 +59,9 @@ class _HomePageState extends State<HomePage> {
             ElevatedButton(
                 onPressed: () {
                   FirebaseAuth.instance.signOut();
+                  MaterialPageRoute route = MaterialPageRoute(
+                      builder: (context) => AuthScreen());
+                  Navigator.push(context, route);
                 },
                 child: Text("Sign Out")),
             ElevatedButton(
@@ -65,7 +70,15 @@ class _HomePageState extends State<HomePage> {
                       builder: (context) => MemoriesScreen());
                   Navigator.push(context, route);
                 },
-                child: Text("Memorias"))        
+                child: Text("Memorias")),
+            ElevatedButton(
+                onPressed: () {
+                  MaterialPageRoute route = MaterialPageRoute(
+                      builder: (context) => IntentScreen());
+                  Navigator.push(context, route);
+                },
+                child: Text("intent")),    
+
           ],
         ),
       ),

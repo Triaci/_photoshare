@@ -12,13 +12,32 @@ class MemoriesScreen extends StatefulWidget {
 }
 
 class _MemoriesScreenState extends State<MemoriesScreen> {
+  Stream<List<Memoria>> readMemories() => FirebaseFirestore.instance
+      .collection('memorias')
+      .snapshots()
+      .map((snapshot) =>
+          snapshot.docs.map((doc) => Memoria.fromJson(doc.data())).toList());
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Center(
+        body: 
+            StreamBuilder<List<Memoria>>(
+                stream: readMemories(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasError) {
+                    return Text("Algo deu Errado");
+                  } else if (snapshot.hasData) {
+                    final memorias = snapshot.data!;
+
+                    return ListView(
+                      children: memorias.map(buildMemory).toList(),
+                    );
+                  } else {
+                    return Center(child: CircularProgressIndicator());
+                  }
+                }),
+          /*  Center(
               child: ElevatedButton(
                   onPressed: () {
                     MaterialPageRoute route =
@@ -26,20 +45,26 @@ class _MemoriesScreenState extends State<MemoriesScreen> {
                     Navigator.push(context, route);
                   },
                   child: Text('retorna para a tela principal')),
-            )
-          ],
-        ),
+            )*/
         floatingActionButton: FloatingActionButton(
             child: const Icon(Icons.add),
             onPressed: (() {
-              createUser(Memoria(
+              createMemory(Memoria(
                   titulo: "segunda memoria",
                   corpo: "segundo corpo",
                   data: DateTime.now()));
             })));
   }
 
-  Future createUser(Memoria memoria) async {
+  Widget buildMemory(Memoria memoria) => ListTile(
+        leading: CircleAvatar(
+          child: Text('teste'),
+        ),
+        title: Text(memoria.titulo.toString()),
+        subtitle: Text(memoria.corpo.toString()),
+      );
+
+  Future createMemory(Memoria memoria) async {
     final docUser = FirebaseFirestore.instance.collection('memorias').doc();
 
     final json = {

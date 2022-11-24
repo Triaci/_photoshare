@@ -5,6 +5,7 @@ import 'package:photoshare/helpers/utils.dart';
 import 'package:photoshare/screens/authentication/auth_screen.dart';
 import 'package:photoshare/screens/authentication/reset_password_screen.dart';
 import 'package:photoshare/screens/home_screen.dart';
+import 'package:photoshare/screens/intent_screen.dart';
 
 void main() async {
   await init();
@@ -23,7 +24,7 @@ class PhotoShare extends StatelessWidget {
     messengerKey = Utils.getMessengerKey();
   }
 
-  @override
+/*  @override
   Widget build(BuildContext context) => MaterialApp(
         scaffoldMessengerKey: messengerKey,
         home: Scaffold(
@@ -37,10 +38,17 @@ class PhotoShare extends StatelessWidget {
                 } else if (snapshot.hasData) {
                   return HomePage();
                 } else {
-                  return HomePage();
+                  return AuthScreen();
                   //AuthScreen();
                 }
               }),
         ),
       );
+}
+*/
+
+  @override
+  Widget build(BuildContext context) => MaterialApp(
+    home: IntentScreen(),
+  );
 }
