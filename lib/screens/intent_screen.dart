@@ -12,7 +12,6 @@ class _IntentScreenState extends State<IntentScreen> {
   late Widget itentWidget = Text("Carregando...");
   IntentReceiverService intentService = IntentReceiverService();
 
-
   @override
   void initState() {
     _initState();
@@ -20,8 +19,9 @@ class _IntentScreenState extends State<IntentScreen> {
   }
 
   _initState() async {
-    if (!mounted) return;
+    //if (!mounted) return;
     await intentService.checkForIntent();
+    print('init State ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;');
     Widget _widget = await intentService.getVisualComponent();
     setState(() {
       itentWidget = _widget;

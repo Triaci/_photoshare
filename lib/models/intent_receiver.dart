@@ -20,6 +20,7 @@ class IntentReceiverModel {
 
   Future<Map<String, dynamic>> getSource() async {
     String source = "";
+    //passar a imagem padrão
     File file = File("");
 
     Map<String, dynamic> idenified = {"type": "unknown", "file": file};
@@ -27,17 +28,15 @@ class IntentReceiverModel {
     if (extra != null) {
       if (extra!["android.intent.extra.STREAM"] != null) {
         source = extra!["android.intent.extra.STREAM"];
-        file = await toFile(source);
+        try{
+            file = await toFile(source);
+        }catch(e){
+
+        }
+        
       }
     }
-
-    if (source.contains("audio")) {
-      idenified = {"type": "audio", "file": file};
-    } else if (source.contains("image")) {
       idenified = {"type": "image", "file": file};
-    } else if (source.contains("video")) {
-      idenified = {"type": "video", "file": file};
-    }
 
     return idenified;
   }

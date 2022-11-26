@@ -2,7 +2,6 @@
 
 import 'dart:async';
 
-
 import 'package:flutter/material.dart' hide Intent;
 import 'package:photoshare/models/intent_receiver.dart';
 import 'package:receive_intent/receive_intent.dart';
@@ -15,6 +14,7 @@ class IntentReceiverService {
 
   Future<void> checkForIntent() async {
     final receivedIntent = await ReceiveIntent.getInitialIntent();
+    print('passou.................');
     if (receivedIntent != null) {
       intentReceiver = IntentReceiverModel(
         fromPackageName: receivedIntent.fromPackageName,
@@ -28,25 +28,12 @@ class IntentReceiverService {
 
   Future<Widget> getVisualComponent() async {
     Map<String, dynamic> intentData = await intentReceiver!.getSource();
-
-    if (intentData["type"] == "audio") {
-      return AudioComponent(intentData["file"]);
-    } else if (intentData["type"] == "image") {
-      return ImageComponent(intentData["file"]);
-    }
-    //else if(intentData["type"] == "audio"){
-    // TODO
-    // }
-    else {
+    if (intentData['type'] == 'unknown') {
       return Center(
-        child: Column(
-          children: [
+        child: Column(children: [
           Text(
             "Aguardando Intent...",
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 25
-            ),
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
           ),
           Padding(padding: EdgeInsets.only(bottom: 45)),
           CircularProgressIndicator(),
@@ -56,6 +43,14 @@ class IntentReceiverService {
           )
         ]),
       );
+    } else {
+        return ImageComponent(intentData["file"]);
     }
+
+    
+
+    //else if(intentData["type"] == "audio"){
+    // TODO
+    // }
   }
 }

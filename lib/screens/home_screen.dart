@@ -6,6 +6,7 @@ import 'package:photoshare/screens/audio_screen.dart';
 import 'package:photoshare/screens/authentication/auth_screen.dart';
 import 'package:photoshare/screens/camera_screen.dart';
 import 'package:photoshare/screens/intent_screen.dart';
+import 'package:photoshare/screens/map_screen.dart';
 import 'package:photoshare/screens/memories_screen.dart';
 
 import '../services/firebase_messaging_service.dart';
@@ -77,7 +78,14 @@ class _HomePageState extends State<HomePage> {
                       builder: (context) => IntentScreen());
                   Navigator.push(context, route);
                 },
-                child: Text("intent")),    
+                child: Text("intent")),
+            ElevatedButton(
+                onPressed: () {
+                  MaterialPageRoute route = MaterialPageRoute(
+                      builder: (context) => MapScreen());
+                  Navigator.push(context, route);
+                },
+                child: Text("Map")),        
 
           ],
         ),

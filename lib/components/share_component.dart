@@ -14,19 +14,10 @@ class ShareComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        ElevatedButtonTheme(
-          data: ElevatedButtonThemeData(
-              style: ElevatedButton.styleFrom(minimumSize: Size(395, 60))),
-          child: ButtonBar(
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              ElevatedButton(
-                onPressed: () => Share.shareXFiles([XFile(file.path)],
-                    text: "Compartilhando com nosso App", subject: "Subject"),
-                child: Icon(Icons.share),
-              ),
-            ],
-          ),
+        ElevatedButton(
+          onPressed: () => Share.shareXFiles([XFile(file.path)],
+              text: "Compartilhando com nosso App", subject: "Subject"),
+          child: Icon(Icons.share),
         ),
       ],
     );

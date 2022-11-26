@@ -24,7 +24,7 @@ class PhotoShare extends StatelessWidget {
     messengerKey = Utils.getMessengerKey();
   }
 
-/*  @override
+  @override
   Widget build(BuildContext context) => MaterialApp(
         scaffoldMessengerKey: messengerKey,
         home: Scaffold(
@@ -44,11 +44,4 @@ class PhotoShare extends StatelessWidget {
               }),
         ),
       );
-}
-*/
-
-  @override
-  Widget build(BuildContext context) => MaterialApp(
-    home: IntentScreen(),
-  );
 }
