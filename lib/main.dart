@@ -26,6 +26,7 @@ class PhotoShare extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => MaterialApp(
+        //Verifica se possui usuario logado, se tiver vai para a home se não vai para a tela de login
         scaffoldMessengerKey: messengerKey,
         home: Scaffold(
           body: StreamBuilder<User?>(
@@ -39,7 +40,6 @@ class PhotoShare extends StatelessWidget {
                   return HomePage();
                 } else {
                   return AuthScreen();
-                  //AuthScreen();
                 }
               }),
         ),

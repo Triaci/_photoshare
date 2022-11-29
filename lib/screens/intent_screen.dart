@@ -19,10 +19,8 @@ class _IntentScreenState extends State<IntentScreen> {
   }
 
   _initState() async {
-    //if (!mounted) return;
-    await intentService.checkForIntent();
-    print('init State ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;');
-    Widget _widget = await intentService.getVisualComponent();
+       await intentService.checkForIntent();
+        Widget _widget = await intentService.getVisualComponent();
     setState(() {
       itentWidget = _widget;
     });
@@ -40,14 +38,6 @@ class _IntentScreenState extends State<IntentScreen> {
             Container(
               padding: EdgeInsets.only(bottom: 50),
               child: itentWidget,
-            ),
-            ElevatedButton(
-              onPressed: () => Navigator.pushNamed(context, "/notifications"),
-              child: Text("Notificar agora"),
-            ),
-            ElevatedButton(
-              onPressed: () => Navigator.pushNamed(context, "/laucher"),
-              child: Text("Lançar URL"),
             ),
           ],
         ),

@@ -1,11 +1,13 @@
 import 'dart:developer';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../components/place_action.dart';
 import '../components/place_dialog.dart';
+import '../models/memoria_model.dart';
 import '../models/place.dart';
 
 class MapScreen extends StatefulWidget {
@@ -17,11 +19,9 @@ class MapScreen extends StatefulWidget {
 
 class _MapScreenState extends State<MapScreen> {
   List<Marker> markers = [];
-  //DB db = new DB();
 
   @override
   void initState() {
-    _getSavedPlaces();
     Geolocator.getCurrentPosition().then((Position pos) {
       addMarker(
           pos.latitude, pos.longitude, "currentPosition", "Eu estou aqui!");
@@ -37,7 +37,7 @@ class _MapScreenState extends State<MapScreen> {
     return Scaffold(
       appBar: AppBar(
         actions: placeActions(context),
-        title: Text('The Treasure Mapp'),
+        title: Text('Map'),
       ),
       body: Container(
         child: GoogleMap(
@@ -49,10 +49,11 @@ class _MapScreenState extends State<MapScreen> {
             Place place =
                 new Place(0, "", position.latitude, position.longitude, "");
             PlaceDialog dialog = PlaceDialog(place, true);
-            showDialog(
-                    context: context,
-                    builder: (context) => dialog.buildAlert(context))
-                .then((_) => _getSavedPlaces());
+            createMemory(Memoria(
+                titulo: "esse lugar foi incrível",
+                corpo:
+                    "Latitude $position.latitude Longitude $position.longitude",
+                data: DateTime.now()));
           },
         ),
       ),
@@ -68,10 +69,6 @@ class _MapScreenState extends State<MapScreen> {
             place = new Place(0, "", position.latitude, position.longitude, "");
           }
           PlaceDialog dialog = PlaceDialog(place, true);
-          showDialog(
-                  context: context,
-                  builder: (context) => dialog.buildAlert(context))
-              .then((_) => _getSavedPlaces());
         },
         child: Icon(
           Icons.add_location,
@@ -97,19 +94,15 @@ class _MapScreenState extends State<MapScreen> {
     });
   }
 
-  void _getSavedPlaces() async {
-    /* db.openDb().then(
-          (dbInstance) => dbInstance!.getPlaces().then(
-                (List<Place> savePlaces) => savePlaces.forEach(
-                  (Place place) {
-                    addMarker(
-                        place.lat, place.lon, place.id.toString(), place.name);
-                    setState(() {
-                      markers = markers;
-                    });
-                  },
-                ),
-              ),
-        );*/
+  Future createMemory(Memoria memoria) async {
+    final docUser = FirebaseFirestore.instance.collection('memorias').doc();
+
+    final json = {
+      'titulo': memoria.titulo,
+      'corpo': memoria.corpo,
+      'data': memoria.data
+    };
+
+    await docUser.set(json);
   }
 }

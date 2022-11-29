@@ -51,20 +51,7 @@ class _HomePageState extends State<HomePage> {
                       builder: (context) => AudioComponent(File('abc')));
                   Navigator.push(context, route);
                 },
-                child: Text("Gravar um Áudio.")),
-            ElevatedButton(
-                onPressed: () {
-                  
-                },
-                child: Text("Receber um Intent")),
-            ElevatedButton(
-                onPressed: () {
-                  FirebaseAuth.instance.signOut();
-                  MaterialPageRoute route = MaterialPageRoute(
-                      builder: (context) => AuthScreen());
-                  Navigator.push(context, route);
-                },
-                child: Text("Sign Out")),
+                child: Text("Gravar Áudio")),
             ElevatedButton(
                 onPressed: () {
                   MaterialPageRoute route = MaterialPageRoute(
@@ -78,15 +65,22 @@ class _HomePageState extends State<HomePage> {
                       builder: (context) => IntentScreen());
                   Navigator.push(context, route);
                 },
-                child: Text("intent")),
+                child: Text("Intent")),
             ElevatedButton(
                 onPressed: () {
                   MaterialPageRoute route = MaterialPageRoute(
                       builder: (context) => MapScreen());
                   Navigator.push(context, route);
                 },
-                child: Text("Map")),        
-
+                child: Text("Map")),
+            ElevatedButton(
+                onPressed: () {
+                  FirebaseAuth.instance.signOut();
+                  MaterialPageRoute route = MaterialPageRoute(
+                      builder: (context) => AuthScreen());
+                  Navigator.push(context, route);
+                },
+                child: Text("Sign Out")),            
           ],
         ),
       ),

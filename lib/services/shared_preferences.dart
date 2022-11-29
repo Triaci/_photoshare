@@ -13,9 +13,6 @@ class SharedPreferencesService extends ChangeNotifier {
 
   _load() async {
     final sharedPreferences = await SharedPreferences.getInstance();
-    _preferences.setPlayerAnimation =
-        await sharedPreferences.getString('playerAnimation') ??
-            "https://media.tenor.com/SexsGMnqLn0AAAAi/pepe-pepe-song.gif";
     _preferences.setNotificationSeconds =
         await sharedPreferences.getInt('notificationSeconds') ?? 0;
   }

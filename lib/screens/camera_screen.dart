@@ -47,10 +47,7 @@ class _CameraScreenState extends State<CameraScreen> {
     super.dispose();
   }
 
-  //checkNotification() async {
-  //await Provider.of<NotificationService>(context, listen: false)
-  //    .checkForNotifications();
-  //}
+ 
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +59,6 @@ class _CameraScreenState extends State<CameraScreen> {
         child: Column(
           children: [
             cameraPreview,
-            //  TextButton(child: Text("Salvar"), onPressed: (){})
           ],
         ),
       ),

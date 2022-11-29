@@ -5,8 +5,6 @@ import 'dart:async';
 import 'package:flutter/material.dart' hide Intent;
 import 'package:photoshare/models/intent_receiver.dart';
 import 'package:receive_intent/receive_intent.dart';
-
-import '../components/audio_component.dart';
 import '../components/image_component.dart';
 
 class IntentReceiverService {
@@ -14,7 +12,6 @@ class IntentReceiverService {
 
   Future<void> checkForIntent() async {
     final receivedIntent = await ReceiveIntent.getInitialIntent();
-    print('passou.................');
     if (receivedIntent != null) {
       intentReceiver = IntentReceiverModel(
         fromPackageName: receivedIntent.fromPackageName,
@@ -46,11 +43,5 @@ class IntentReceiverService {
     } else {
         return ImageComponent(intentData["file"]);
     }
-
-    
-
-    //else if(intentData["type"] == "audio"){
-    // TODO
-    // }
   }
 }

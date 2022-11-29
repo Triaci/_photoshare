@@ -1,19 +1,17 @@
 import 'dart:io';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
 import 'package:gallery_saver/gallery_saver.dart';
+import 'package:path/path.dart';
+import 'package:photoshare/screens/home_screen.dart';
 import 'package:photoshare/services/notification_service.dart';
 import 'package:share_plus/share_plus.dart';
 
-
+import '../models/memoria_model.dart';
 
 @immutable
 class FotoScreen extends StatelessWidget {
-  static const _actionTitles = [
-    'A Foto Foi Salva na Galeria!',
-    '',
-    'Upload Video'
-  ];
   final String imagePath;
 
   const FotoScreen(this.imagePath);
@@ -23,7 +21,7 @@ class FotoScreen extends StatelessWidget {
       context: context,
       builder: (context) {
         return AlertDialog(
-          content: Text(_actionTitles[index]),
+          content: Text(''),
           actions: [
             TextButton(
               onPressed: () => Navigator.of(context).pop(),
@@ -37,14 +35,13 @@ class FotoScreen extends StatelessWidget {
 
   void _salvaGaleria(BuildContext context) async {
     final notification = NotificationService();
-    //final firebase = FireBaseMessagingService();
 
     await GallerySaver.saveImage(imagePath);
-    /*notification.showNotification(LocalNotification(
+    notification.showNotification(LocalNotification(
         id: 1,
         title: "A imagem foi salva na Galeria",
         body: "Verifique a Galeria",
-        payload: "asd"));*/
+        payload: "asd"));
   }
 
   void _compartilha(BuildContext context, File file) {
@@ -76,13 +73,41 @@ class FotoScreen extends StatelessWidget {
                 _compartilha(context, File(imagePath));
               }),
           ActionButton(
-            onPressed: () => _showAction(context, 2),
-            icon: const Icon(Icons.mail)
-          ),
+              onPressed: () {
+                createMemory(Memoria(
+                    titulo: 'lembra desse dia ?',
+                    corpo: imagePath,
+                    data: DateTime.now()), context);
+              },
+              icon: const Icon(Icons.upload)),
         ],
       ),
     );
   }
+}
+
+Future createMemory(Memoria memoria, context) async {
+   final notification = NotificationService();
+  final docUser = FirebaseFirestore.instance.collection('memorias').doc();
+
+  final json = {
+    'titulo': memoria.titulo,
+    'corpo': memoria.corpo,
+    'data': memoria.data
+  };
+
+  await docUser.set(json);
+ notification.showNotification(LocalNotification(
+        id: 1,
+        title: "A imagem foi salva nas Memorias",
+        body: "Verifique o FireBase",
+        payload: "asd"));
+
+   MaterialPageRoute route =
+                      MaterialPageRoute(builder: (context) => HomePage());
+                  Navigator.push(context, route);
+
+  
 }
 
 /*Código do Floating Action Button*/

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/cupertino.dart';
 import 'package:uri_to_file/uri_to_file.dart';
 
 class IntentReceiverModel {
@@ -21,7 +22,7 @@ class IntentReceiverModel {
   Future<Map<String, dynamic>> getSource() async {
     String source = "";
     //passar a imagem padrão
-    File file = File("");
+    File file = File('images/sample.jpg');
 
     Map<String, dynamic> idenified = {"type": "unknown", "file": file};
 

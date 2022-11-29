@@ -22,6 +22,7 @@ class _MemoriesScreenState extends State<MemoriesScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: 
+        //lê as memorias no firebase
             StreamBuilder<List<Memoria>>(
                 stream: readMemories(),
                 builder: (context, snapshot) {
@@ -31,21 +32,14 @@ class _MemoriesScreenState extends State<MemoriesScreen> {
                     final memorias = snapshot.data!;
 
                     return ListView(
-                      children: memorias.map(buildMemory).toList(),
+                      children:  memorias.map(buildMemory).toList(),
+                      
                     );
                   } else {
                     return Center(child: CircularProgressIndicator());
                   }
                 }),
-          /*  Center(
-              child: ElevatedButton(
-                  onPressed: () {
-                    MaterialPageRoute route =
-                        MaterialPageRoute(builder: (context) => HomePage());
-                    Navigator.push(context, route);
-                  },
-                  child: Text('retorna para a tela principal')),
-            )*/
+                //insere uma memoria com texto fixo no firebase
         floatingActionButton: FloatingActionButton(
             child: const Icon(Icons.add),
             onPressed: (() {
