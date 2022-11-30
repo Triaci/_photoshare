@@ -19,8 +19,8 @@ class _IntentScreenState extends State<IntentScreen> {
   }
 
   _initState() async {
-       await intentService.checkForIntent();
-        Widget _widget = await intentService.getVisualComponent();
+    await intentService.checkForIntent();
+    Widget _widget = await intentService.getVisualComponent();
     setState(() {
       itentWidget = _widget;
     });
@@ -41,10 +41,6 @@ class _IntentScreenState extends State<IntentScreen> {
             ),
           ],
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => Navigator.pushNamed(context, "/settings"),
-        child: const Icon(Icons.settings),
       ),
     );
   }
