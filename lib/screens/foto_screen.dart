@@ -78,6 +78,8 @@ class FotoScreen extends StatelessWidget {
                     titulo: 'lembra desse dia ?',
                     corpo: imagePath,
                     data: DateTime.now()), context);
+
+
               },
               icon: const Icon(Icons.upload)),
         ],
@@ -97,10 +99,10 @@ Future createMemory(Memoria memoria, context) async {
   };
 
   await docUser.set(json);
- notification.showNotification(LocalNotification(
+ notification.scheduleNotification(LocalNotification(
         id: 1,
         title: "A imagem foi salva nas Memorias",
-        body: "Verifique o FireBase",
+        body: "Notificacao com 5 segundos",
         payload: "asd"));
 
    MaterialPageRoute route =

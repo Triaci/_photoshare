@@ -4,8 +4,11 @@ import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:photoshare/screens/authentication/auth_screen.dart';
+import 'package:photoshare/screens/authentication/sign_in_screen..dart';
 
 import '../../helpers/utils.dart';
+import '../home_screen.dart';
 
 
 class SignUpScreen extends StatefulWidget {
@@ -71,6 +74,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
       await FirebaseAuth.instance.createUserWithEmailAndPassword(
           email: emailController.text.trim(),
           password: senhaController.text.trim());
+     MaterialPageRoute route =
+                MaterialPageRoute(builder: (context) => AuthScreen());
+            Navigator.push(context, route);
+
+
     } on FirebaseAuthException catch (e) {
       print('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%');
       print(e.message);

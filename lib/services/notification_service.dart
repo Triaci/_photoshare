@@ -74,8 +74,10 @@ class NotificationService {
   }
 
   scheduleNotification(LocalNotification localnotification) {
-    Preferences preferences;
-    final date = DateTime.now().add(const Duration(seconds: 5));
+    Preferences preferences = Preferences();
+    int seconds = preferences.getNotificationSeconds;
+
+    final date = DateTime.now().add(Duration(seconds: seconds));
     androidDetails = const AndroidNotificationDetails(
       'lembretes_notifications_x',
       'Lembretes',
