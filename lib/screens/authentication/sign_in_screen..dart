@@ -94,6 +94,7 @@ class _LoginScreenState extends State<SignInScreen> {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
           email: emailController.text.trim(),
           password: senhaController.text.trim());
+          
           MaterialPageRoute route =
                 MaterialPageRoute(builder: (context) => HomePage());
             Navigator.push(context, route);

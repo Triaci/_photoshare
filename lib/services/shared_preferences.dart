@@ -25,10 +25,6 @@ class SharedPreferencesService extends ChangeNotifier {
         'notificationSeconds', _preferences.getNotificationSeconds);
   }
 
-  void set setPlayerAnimation(String value) {
-    _preferences.setPlayerAnimation = value;
-    notifyListeners();
-  }
 
   void set setNotificationSeconds(int value) {
     _preferences.setNotificationSeconds = value;

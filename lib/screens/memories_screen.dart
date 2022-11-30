@@ -44,7 +44,7 @@ class _MemoriesScreenState extends State<MemoriesScreen> {
             child: const Icon(Icons.add),
             onPressed: (() {
               createMemory(Memoria(
-                  titulo: "segunda memoria",
+                  titulo: "Terceira memoria",
                   corpo: "segundo corpo",
                   data: DateTime.now()));
             })));
@@ -52,7 +52,6 @@ class _MemoriesScreenState extends State<MemoriesScreen> {
 
   Widget buildMemory(Memoria memoria) => ListTile(
         leading: CircleAvatar(
-          child: Text('teste'),
         ),
         title: Text(memoria.titulo.toString()),
         subtitle: Text(memoria.corpo.toString()),

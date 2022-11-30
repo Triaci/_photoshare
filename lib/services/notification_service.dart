@@ -5,6 +5,8 @@ import 'package:photoshare/routes.dart';
 import 'package:timezone/timezone.dart' as tz;
 import 'package:timezone/data/latest_all.dart' as tz;
 
+import '../models/shared_preferences.dart';
+
 class LocalNotification {
   final int id;
   final String? title;
@@ -72,6 +74,7 @@ class NotificationService {
   }
 
   scheduleNotification(LocalNotification localnotification) {
+    Preferences preferences;
     final date = DateTime.now().add(const Duration(seconds: 5));
     androidDetails = const AndroidNotificationDetails(
       'lembretes_notifications_x',
@@ -90,8 +93,8 @@ class NotificationService {
         NotificationDetails(android: androidDetails),
         payload: localnotification.payload,
         androidAllowWhileIdle: true,
-        uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime
-        );
+        uiLocalNotificationDateInterpretation:
+            UILocalNotificationDateInterpretation.absoluteTime);
   }
 
   checkForNotifications() async {
